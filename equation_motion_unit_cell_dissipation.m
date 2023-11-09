@@ -1,5 +1,8 @@
 function du =equation_motion_unit_cell_dissipation(t,u,n,m,alpha,theta,U_entire_name,U_fix_name,f,f_U_name)
 
+% 计时
+tic;
+
 du = zeros(2*(6*n*m+2*n+2*m),1);    % a column vector store all variables
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -494,3 +497,5 @@ for xx=1:length(f_U_name)
     du(2*p_f(xx))=du(2*p_f(xx))+f(xx);
 end
 
+
+cal_time = toc

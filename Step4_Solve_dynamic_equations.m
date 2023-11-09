@@ -1,12 +1,15 @@
 clear all
 clc
-load Homogeneous_lattice_angles.mat
+% load Homogeneous_lattice_angles.mat
+load Homogeneous_lattice_angles_bistable_new.mat
 load Variables_names_m_by_n_lattice.mat
 load Coor_hexagon.mat
 % load Variables_names_unit_cell.mat
 
 %Present n (row) by m (column) unit cells, as well as n-1 by m-1 hexagons
 % n and m are from Coor_hexagon.mat
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Blue Triangle
