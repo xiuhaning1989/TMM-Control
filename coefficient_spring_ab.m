@@ -1,10 +1,10 @@
-function u =coefficient_spring_ab(x1,x2,y1,y2,theta,alpha)
+function u =coefficient_spring_ab(x1,x2,y1,y2,theta,alpha,configuration)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-global a_b; 
- global psi_bb; 
-global psi_ar; global psi_cr;
+a_b=configuration(1,1);
+psi_bb=configuration(1,5);
+psi_ar=configuration(2,4);psi_cr=configuration(2,6);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 at_arbbcr=alpha+theta+psi_ar+psi_bb+psi_cr;

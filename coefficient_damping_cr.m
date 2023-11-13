@@ -1,11 +1,10 @@
-function u =coefficient_damping_cr(x1,x2,y1,y2,theta,alpha)
+function u =coefficient_damping_cr(x1,x2,y1,y2,theta,alpha,configuration)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
- global psi_bb; 
-global a_r; global b_r; 
- global psi_cr;
+psi_bb=configuration(1,5);
+a_r=configuration(2,1);b_r=configuration(2,2);
+psi_cr=configuration(2,6);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 t_bb=theta+psi_bb;
 t_bbcr=theta+psi_bb+psi_cr;

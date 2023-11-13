@@ -1,12 +1,12 @@
-function u =coefficient_spring_ls(x1,x2,y1,y2,theta,alpha)
+function u =coefficient_spring_ls(x1,x2,y1,y2,theta,alpha,configuration)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-global a_b; 
-global psi_bb; 
- global b_r; 
-global psi_ar;  global psi_cr;
- global l_s
+a_b=configuration(1,1);
+psi_bb=configuration(1,5);
+b_r=configuration(2,2);
+psi_ar=configuration(2,4);psi_cr=configuration(2,6);
+l_s=configuration(4,1);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 t_bbcr=theta+psi_bb+psi_cr;

@@ -1,9 +1,9 @@
-function u =coefficient_spring_ar(x1,x2,y1,y2,theta,alpha)
+function u =coefficient_spring_ar(x1,x2,y1,y2,theta,alpha,configuration)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- global psi_bb; 
-global a_r; 
+psi_bb=configuration(1,5);
+a_r=configuration(2,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 t_bb=theta+psi_bb;

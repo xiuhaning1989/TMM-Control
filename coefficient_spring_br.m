@@ -1,10 +1,10 @@
-function u =coefficient_spring_br(x1,x2,y1,y2,theta,alpha)
+function u =coefficient_spring_br(x1,x2,y1,y2,theta,alpha,configuration)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- global psi_bb; 
-global b_r; 
-global psi_cr;
+psi_bb=configuration(1,5);
+b_r=configuration(2,2);
+psi_cr=configuration(2,6);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
