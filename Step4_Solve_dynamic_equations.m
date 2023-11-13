@@ -25,7 +25,7 @@ psi_cr=acos((c_r^2-b_r^2-a_r^2)/(-2*b_r*a_r));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 l_s=(a_b+b_r)/2*0.95;
 k_bond=1e4; k_spring=100;
-eta_bond=30; eta_spring=20;
+eta_bond=20; eta_spring=10;
 m_b=0.1;m_r=0.1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -49,12 +49,12 @@ alpha_matrix=alpha*ones(n+1,m);
 %%
 % Define the y-direction of the bottom edge are always zero. Lattice can
 % slide at the bottom edge1
-result = strcat(num2str(2),num2str(1),num2str(1),num2str(1));   U_fix_name(1,:) = str2num(result);
-result = strcat(num2str(2),num2str(1),num2str(2),num2str(1));   U_fix_name(2,:) = str2num(result);
-result = strcat(num2str(2),num2str(1),num2str(1),num2str(2));   U_fix_name(3,:) = str2num(result);
-result = strcat(num2str(2),num2str(1),num2str(2),num2str(2));   U_fix_name(4,:) = str2num(result);
-result = strcat(num2str(2),num2str(2),num2str(1),num2str(2));   U_fix_name(5,:) = str2num(result);
-result = strcat(num2str(2),num2str(2),num2str(2),num2str(2));   U_fix_name(6,:) = str2num(result);
+result = strcat(num2str(4),num2str(3),num2str(1),num2str(1));   U_fix_name(1,:) = str2num(result);
+result = strcat(num2str(4),num2str(3),num2str(2),num2str(1));   U_fix_name(2,:) = str2num(result);
+result = strcat(num2str(4),num2str(3),num2str(1),num2str(3));   U_fix_name(3,:) = str2num(result);
+result = strcat(num2str(4),num2str(3),num2str(2),num2str(3));   U_fix_name(4,:) = str2num(result);
+result = strcat(num2str(4),num2str(4),num2str(1),num2str(2));   U_fix_name(5,:) = str2num(result);
+result = strcat(num2str(4),num2str(4),num2str(2),num2str(2));   U_fix_name(6,:) = str2num(result);
 if j<10
     U_fix_name=U_fix_name/1e3;
 elseif j<100
@@ -63,12 +63,12 @@ else
     U_fix_name=U_fix_name/1e5;
 end
 
-U_fix_name=[U_bottom_name(1:end);U_fix_name];  
+% U_fix_name=[U_bottom_name(1:end);U_fix_name];  
 
 % Define external force at the designated point of the lattice
 f_U_name=[];
 for j=1:1
-result = strcat(num2str(n+1),num2str(j),num2str(2),num2str(3));   f_U_name1 = str2num(result);
+result = strcat(num2str(3),num2str(1),num2str(1),num2str(2));   f_U_name1 = str2num(result);
 if j<10
     f_U_name1=f_U_name1/1e3;
 elseif j<100
@@ -78,13 +78,13 @@ else
 end
 f_U_name=[f_U_name;f_U_name1];
 end
-F_external=[0.1].*ones(length(f_U_name),1);
+F_external=[1].*ones(length(f_U_name),1);
 
 
-delta_t=1e-4; T=1;
+delta_t=1e-3; T=1;
 Time=0:delta_t:T;
-omega=2*pi;
-Force_ext=F_external.*exp(-1*(Time-1).^2).*cos(omega*Time);
+omega=10*pi;
+Force_ext=-F_external.*exp(-20*(Time-0.1).^2).*cos(omega*Time);
 
 % u=zeros(2*(6*n*m+2*n+2*m),length(Time));
 initialvals=zeros(2*(6*n*m+2*n+2*m),1);
@@ -112,7 +112,7 @@ U=U';
 elapsedTime = toc;
 fprintf('Elapsed time: %.4f seconds\n', elapsedTime);
 
-save('Dynamic_2_1_k2=100_eta2=20_f=0.mat')
+save('Dynamic_5_5_k2=100_eta2=10_f=Gaussian.mat')
 
 
 
