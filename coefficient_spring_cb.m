@@ -2,9 +2,13 @@ function u =coefficient_spring_cb(x1,x2,y1,y2,theta,alpha,configuration)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-a_b=configuration(1,1);b_b=configuration(1,2);c_b=configuration(1,3);
-psi_bb=configuration(1,5);psi_cb=configuration(1,6);
-psi_ar=configuration(2,4);psi_cr=configuration(2,6);
+a_b=configuration.a_b;
+b_b=configuration.b_b;
+c_b=configuration.c_b;
+psi_bb=configuration.psi_bb;
+psi_cb=configuration.psi_cb;
+psi_ar=configuration.psi_ar;
+psi_cr=configuration.psi_cr;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 at_arbbcr=alpha+theta+psi_ar+psi_bb+psi_cr;

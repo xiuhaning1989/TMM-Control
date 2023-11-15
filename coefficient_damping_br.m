@@ -2,9 +2,9 @@ function u =coefficient_damping_br(x1,x2,y1,y2,theta,alpha,configuration)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-psi_bb=configuration(1,5);
-b_r=configuration(2,2);
-psi_cr=configuration(2,6);
+psi_bb=configuration.psi_bb;
+b_r=configuration.b_r;
+psi_cr=configuration.psi_cr;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

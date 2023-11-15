@@ -2,8 +2,8 @@ function u =coefficient_spring_ar(x1,x2,y1,y2,theta,alpha,configuration)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-psi_bb=configuration(1,5);
-a_r=configuration(2,1);
+psi_bb=configuration.psi_bb;
+a_r=configuration.a_r;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 t_bb=theta+psi_bb;
