@@ -71,12 +71,12 @@ clc;
     % Define the y-direction of the bottom edge are always zero. Lattice can
     % slide at the bottom edge1
     j = 1;
-    result = strcat(num2str(4), num2str(3), num2str(1), num2str(1)); U_fix_name(1, :) = str2num(result);
-    result = strcat(num2str(4), num2str(3), num2str(2), num2str(1)); U_fix_name(2, :) = str2num(result);
-    result = strcat(num2str(4), num2str(3), num2str(1), num2str(3)); U_fix_name(3, :) = str2num(result);
-    result = strcat(num2str(4), num2str(3), num2str(2), num2str(3)); U_fix_name(4, :) = str2num(result);
-    result = strcat(num2str(4), num2str(4), num2str(1), num2str(2)); U_fix_name(5, :) = str2num(result);
-    result = strcat(num2str(4), num2str(4), num2str(2), num2str(2)); U_fix_name(6, :) = str2num(result);
+    result = strcat(num2str(4), num2str(3), num2str(1), num2str(1)); U_fix_name(1, :) = str2double(result);
+    result = strcat(num2str(4), num2str(3), num2str(2), num2str(1)); U_fix_name(2, :) = str2double(result);
+    result = strcat(num2str(4), num2str(3), num2str(1), num2str(3)); U_fix_name(3, :) = str2double(result);
+    result = strcat(num2str(4), num2str(3), num2str(2), num2str(3)); U_fix_name(4, :) = str2double(result);
+    result = strcat(num2str(4), num2str(4), num2str(1), num2str(2)); U_fix_name(5, :) = str2double(result);
+    result = strcat(num2str(4), num2str(4), num2str(2), num2str(2)); U_fix_name(6, :) = str2double(result);
 
     if j < 10
         U_fix_name = U_fix_name / 1e3;
@@ -92,7 +92,7 @@ clc;
     f_U_name = [];
 
     for j = 1:1
-        result = strcat(num2str(3), num2str(1), num2str(1), num2str(2)); f_U_name1 = str2num(result);
+        result = strcat(num2str(3), num2str(1), num2str(1), num2str(2)); f_U_name1 = str2double(result);
 
         if j < 10
             f_U_name1 = f_U_name1 / 1e3;
@@ -124,7 +124,7 @@ clc;
 
     elapsedTime = toc;
     fprintf('Elapsed time: %.4f minutes\n', elapsedTime/60);
-
+    
     % draw figure
-    present_lattice_deformation_polarization_transformation('test1.gif', U, Time, Coor_unit_cell_x, Coor_unit_cell_y, Alpha, Gamma, Theta, n, m, rotation_kappa, i_alpha, U_entire_name)
+    % present_lattice_deformation_polarization_transformation('test1.gif', U, Time, Coor_unit_cell_x, Coor_unit_cell_y, Alpha, Gamma, Theta, n, m, rotation_kappa, i_alpha, U_entire_name)
 

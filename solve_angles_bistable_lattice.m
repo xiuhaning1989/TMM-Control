@@ -22,8 +22,6 @@ function [Alpha, Gamma, Theta] = solve_angles_bistable_lattice(configuration)
 
     rest_length_srping = 0.95:0.002:1;
 
-    %%
-
     for i = 1:length(rest_length_srping)
 
         l_s = (a_b + b_r) / 2 * rest_length_srping(i);
@@ -41,7 +39,7 @@ function [Alpha, Gamma, Theta] = solve_angles_bistable_lattice(configuration)
         J_f_D = [F_coorD(3) F_coorD(4); F_coorD(5) F_coorD(6)];
         R1 = R0 - J_f_D \ f_D;
         % i=0;
-        %Netow's method
+        % Netow's method
         while norm(R1 - R0) > 10 ^ -9 %&&  rcond(J_f)>10^-10
             %     i=i+1
             R0 = R1;
@@ -52,13 +50,12 @@ function [Alpha, Gamma, Theta] = solve_angles_bistable_lattice(configuration)
         end
 
         theta0_pola(i) = R1(1); gamma0_pola(i) = R1(2); %solve for theta and gamma
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
     end
 
     Alpha = alpha0_pola;
     Theta = theta0_pola;
     Gamma = gamma0_pola;
-    %%
 
     % figure; plot(Alpha, Theta, 'k--', 'linewidth', 2)
     % hold on; plot(Alpha, Gamma, 'r-', 'linewidth', 2)

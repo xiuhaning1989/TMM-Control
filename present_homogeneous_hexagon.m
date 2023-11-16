@@ -13,7 +13,7 @@ function [Coor_unit_cell_x, Coor_unit_cell_y,rotation_kappa] = present_homogeneo
     psi_br = configuration.psi_br;
     psi_cr = configuration.psi_cr;
 
-    %Present n (row) by m (column) unit cells, as well as n-1 by m-1 hexagons
+    % Present n (row) by m (column) unit cells, as well as n-1 by m-1 hexagons
     % Coor_hexagon_x = ones(n - 1, m - 1, 7);
     % Coor_hexagon_y = ones(n - 1, m - 1, 7);
 
@@ -22,30 +22,27 @@ function [Coor_unit_cell_x, Coor_unit_cell_y,rotation_kappa] = present_homogeneo
     Coor_unit_cell_y = ones(n + 1, m, 9);
     % x, y coordinates for each unit cell from C, A, B, C, A', B' C, P, to Q
 
-    %Choose the angle of the homogeneous lattice (1<=i_alpha<=176), (0.3344<=alpha<=3.8344)
+    % Choose the angle of the homogeneous lattice (1<=i_alpha<=176), (0.3344<=alpha<=3.8344)
     alpha = Alpha(i_alpha);
     gamma = Gamma(i_alpha);
     theta = Theta(i_alpha);
 
-    %%
-    %Define transformation vectors of coordinates
-
-    %From i,j to i+1,j+1
+    % Define transformation vectors of coordinates
+    % From i,j to i+1,j+1
     shift_diagonal = [c_b - c_r * cos(gamma + psi_ab + psi_br) + a_b * cos(gamma - alpha + psi_ab + psi_br), ...
                         -c_r * sin(gamma + psi_ab + psi_br) + a_b * sin(gamma - alpha + psi_ab + psi_br)];
 
-    %From i,1, to i+1,1
+    % From i,1, to i+1,1
     kappa_vertical = 3 * pi - alpha - theta - psi_ar - psi_cr - psi_bb;
     shift_vertical = [b_r * cos(theta + psi_bb + psi_cr) + a_b * cos(kappa_vertical), ...
                         -b_r * sin(theta + psi_bb + psi_cr) + a_b * sin(kappa_vertical)];
     % phi=gamma+theta+psi_ab+psi_bb-2*pi; %phi=0 for homogeneous lattice
 
-    %From 1,j to 1,j+1
+    % From 1,j to 1,j+1
     kappa_horizontal = psi_ab + gamma - pi;
     shift_horizontal = [c_b + a_r * cos(kappa_horizontal), a_r * sin(kappa_horizontal)];
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %Represent an unit cell in a local coordinate system
+    % Represent an unit cell in a local coordinate system
     A = [0, 0];
     B = [-a_r * cos(psi_ab + gamma - pi), -a_r * sin(psi_ab + gamma - pi)];
     C = [b_r * cos(theta + psi_bb + psi_cr), -b_r * sin(theta + psi_bb + psi_cr)];
@@ -59,20 +56,19 @@ function [Coor_unit_cell_x, Coor_unit_cell_y,rotation_kappa] = present_homogeneo
 
     Coor_base_unit_cell = [C; A; B; C; Aa; Bb; C; P; Q] - shift_vertical;
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %Reproduce n (row) by m (column) unit cells
+    % Reproduce n (row) by m (column) unit cells
 
     for j = 1:m % generate the 1st row of lattice (bottom edge)
         Coor_unit_cell_x(1, j, :) = Coor_base_unit_cell(:, 1) + (j - 1) * shift_horizontal(1);
         Coor_unit_cell_y(1, j, :) = Coor_base_unit_cell(:, 2) + (j - 1) * shift_horizontal(2);
     end
 
-    for i = 1:n + 1 %generate the 1st column of the lattice (left edge)
+    for i = 1:n + 1 % generate the 1st column of the lattice (left edge)
         Coor_unit_cell_x(i, 1, :) = Coor_base_unit_cell(:, 1) + (i - 1) * shift_vertical(1);
         Coor_unit_cell_y(i, 1, :) = Coor_base_unit_cell(:, 2) + (i - 1) * shift_vertical(2);
     end
 
-    for j = 1:m %generate unit cells diagonally from the bottom edge
+    for j = 1:m % generate unit cells diagonally from the bottom edge
 
         if m < n + 1
 
@@ -103,7 +99,7 @@ function [Coor_unit_cell_x, Coor_unit_cell_y,rotation_kappa] = present_homogeneo
 
     end
 
-    for i = 1:n + 1 %generate unit cells diagonally from the left edge
+    for i = 1:n + 1 % generate unit cells diagonally from the left edge
 
         if m < n + 1
 
@@ -134,7 +130,7 @@ function [Coor_unit_cell_x, Coor_unit_cell_y,rotation_kappa] = present_homogeneo
 
     end
 
-    %Plot all unit cells to form a n by m lattice
+    % Plot all unit cells to form a n by m lattice
     angle = -atan2(shift_horizontal(2), shift_horizontal(1));
     rotation_kappa = [cos(angle), -sin(angle);
                     sin(angle), cos(-angle)];

@@ -7,7 +7,7 @@ function present_lattice_deformation_polarization_transformation(filename, U, Ti
     Coor_unit_cell_y0 = Coor_unit_cell_y;
     % x, y coordinates for each unit cell from C, A, B, C, A', B' C, P, to Q
 
-    %Choose the angle of the homogeneous lattice (1<=i_alpha<=176), (0.3344<=alpha<=3.8344)
+    % Choose the angle of the homogeneous lattice (1<=i_alpha<=176), (0.3344<=alpha<=3.8344)
     alpha = Alpha(i_alpha);
     gamma = Gamma(i_alpha);
     theta = Theta(i_alpha);
@@ -15,10 +15,12 @@ function present_lattice_deformation_polarization_transformation(filename, U, Ti
     % gamma=Gammanon(i_alpha);
     % theta=Thetanon(i_alpha);
 
-    %%
-    %Plot all unit cells to form a n by m lattice
+    % Plot all unit cells to form a n by m lattice
     figure;
-
+    x_min = [];
+    x_max = [];
+    y_min = []
+    y_max = [];
     for i = 1:n + 1
 
         for j = 1:m
@@ -28,35 +30,53 @@ function present_lattice_deformation_polarization_transformation(filename, U, Ti
             end
 
             XY_unit = rotation_kappa * XY_unit;
-
             if i == 1
-                %             hold on;fill(XY_unit(1,4:7),XY_unit(2,4:7),'r')
+                % hold on;fill(XY_unit(1,4:7),XY_unit(2,4:7),'r')
                 hold on; plot(XY_unit(1, 4:7), XY_unit(2, 4:7), 'b-', 'linewidth', 1);
+                x_min = [x_min,min(XY_unit(1,4:7))];
+                x_max = [x_max,max(XY_unit(1,4:7))];
+                y_min = [y_min,min(XY_unit(2,4:7))];
+                y_max = [y_max,max(XY_unit(2,4:7))];
             elseif i == n + 1
-                %             hold on;fill(XY_unit(1,1:4),XY_unit(2,1:4),'b')
+                % hold on;fill(XY_unit(1,1:4),XY_unit(2,1:4),'b')
                 hold on; plot(XY_unit(1, 1:4), XY_unit(2, 1:4), 'r-', 'linewidth', 1);
+                x_min = [x_min,min(XY_unit(1,1:4))];
+                x_max = [x_max,max(XY_unit(1,1:4))];
+                y_min = [y_min,min(XY_unit(2,1:4))];
+                y_max = [y_max,max(XY_unit(2,1:4))];
             else
-                %             hold on;fill(XY_unit(1,1:4),XY_unit(2,1:4),'b')
+                % hold on;fill(XY_unit(1,1:4),XY_unit(2,1:4),'b')
                 hold on; plot(XY_unit(1, 1:4), XY_unit(2, 1:4), 'r-', 'linewidth', 1);
-                %             hold on;fill(XY_unit(1,4:7),XY_unit(2,4:7),'r')
+                % hold on;fill(XY_unit(1,4:7),XY_unit(2,4:7),'r')
                 hold on; plot(XY_unit(1, 4:7), XY_unit(2, 4:7), 'b-', 'linewidth', 1);
                 hold on; plot(XY_unit(1, 8:9), XY_unit(2, 8:9), 'g-', 'linewidth', 1.5)
+                x_min = [x_min,min(XY_unit(1,:))];
+                x_max = [x_max,max(XY_unit(1,:))];
+                y_min = [y_min,min(XY_unit(2,:))];
+                y_max = [y_max,max(XY_unit(2,:))];
                 axis equal
             end
 
         end
 
     end
+    % X Y limits
+    x_lim = [min(x_min), max(x_max)];
+    y_lim = [min(y_min), max(y_max)];
+
+    % Round
+    x_lim = [floor(min(x_min)), ceil(max(x_max))];
+    y_lim = [floor(min(y_min)), ceil(max(y_max))];
 
     title(['Homogeneous Lattice of ' num2str(n) ' rows and ' ...
                num2str(m) ' columns with angle \alpha = ' num2str(alpha)])
 
-    %%
+
     for i = 1:n + 1
 
         for j = 1:m
-            %Store names of variables of a unit cell only including blue, on the bottom of thr lattice
-            %u_ijx3, u_i+1jx1, u_i+1j+1x2, u_ijy3, u_i+1jy1, u_i+1j+1y2
+            % Store names of variables of a unit cell only including blue, on the bottom of thr lattice
+            % u_ijx3, u_i+1jx1, u_i+1j+1x2, u_ijy3, u_i+1jy1, u_i+1j+1y2
 
             result = strcat(num2str(i), num2str(j), num2str(1), num2str(3));
             Coor_unit_cell_x_name(i, j, 1) = str2num(result);
@@ -173,14 +193,12 @@ function present_lattice_deformation_polarization_transformation(filename, U, Ti
 
         end
 
-        % xlim([min(minX(2:end)) max(maxX)]);
-        % ylim([min(minY) max(maxY)]);
         axis equal
         hold off
         title(['Time = ' num2str(T(tt), '%.2f') ' s'])
 
-        % xlim([-7 11])
-        % ylim([-1.5 9])
+        xlim(x_lim);
+        ylim(y_lim);
 
         f1 = getframe(gcf);
         imind1 = frame2im(f1);

@@ -1,4 +1,4 @@
-function du = equation_motion_unit_cell_dissipation(t, u, n, m, alpha, theta, configuration, U_entire_name, U_fix_name, time, f, f_U_name) %time,
+function du = equation_motion_unit_cell_dissipation(t, u, n, m, alpha, theta, configuration, U_entire_name, U_fix_name, time, f, f_U_name)
 
     du = zeros(2 * (6 * n * m + 2 * n + 2 * m), 1); % a column vector store all variables
 
@@ -34,7 +34,6 @@ function du = equation_motion_unit_cell_dissipation(t, u, n, m, alpha, theta, co
         u(2 * p_0(xx) - 1) = 0; u(2 * p_0(xx)) = 0;
     end
 
-    % 
     for i = 1:n + 1
 
         for j = 1:m + 1
