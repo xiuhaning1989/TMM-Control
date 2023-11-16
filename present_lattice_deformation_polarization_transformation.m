@@ -79,29 +79,29 @@ function present_lattice_deformation_polarization_transformation(filename, U, Ti
             % u_ijx3, u_i+1jx1, u_i+1j+1x2, u_ijy3, u_i+1jy1, u_i+1j+1y2
 
             result = strcat(num2str(i), num2str(j), num2str(1), num2str(3));
-            Coor_unit_cell_x_name(i, j, 1) = str2num(result);
-            Coor_unit_cell_x_name(i, j, 4) = str2num(result);
-            Coor_unit_cell_x_name(i, j, 7) = str2num(result);
+            Coor_unit_cell_x_name(i, j, 1) = str2double(result);
+            Coor_unit_cell_x_name(i, j, 4) = str2double(result);
+            Coor_unit_cell_x_name(i, j, 7) = str2double(result);
             result = strcat(num2str(i), num2str(j), num2str(2), num2str(3));
-            Coor_unit_cell_y_name(i, j, 1) = str2num(result);
-            Coor_unit_cell_y_name(i, j, 4) = str2num(result);
-            Coor_unit_cell_y_name(i, j, 7) = str2num(result);
+            Coor_unit_cell_y_name(i, j, 1) = str2double(result);
+            Coor_unit_cell_y_name(i, j, 4) = str2double(result);
+            Coor_unit_cell_y_name(i, j, 7) = str2double(result);
             result = strcat(num2str(i), num2str(j), num2str(1), num2str(1));
-            Coor_unit_cell_x_name(i, j, 2) = str2num(result);
+            Coor_unit_cell_x_name(i, j, 2) = str2double(result);
             result = strcat(num2str(i), num2str(j), num2str(2), num2str(1));
-            Coor_unit_cell_y_name(i, j, 2) = str2num(result);
+            Coor_unit_cell_y_name(i, j, 2) = str2double(result);
             result = strcat(num2str(i), num2str(j), num2str(1), num2str(2));
-            Coor_unit_cell_x_name(i, j, 3) = str2num(result);
+            Coor_unit_cell_x_name(i, j, 3) = str2double(result);
             result = strcat(num2str(i), num2str(j), num2str(2), num2str(2));
-            Coor_unit_cell_y_name(i, j, 3) = str2num(result);
+            Coor_unit_cell_y_name(i, j, 3) = str2double(result);
             result = strcat(num2str(i + 1), num2str(j), num2str(1), num2str(1));
-            Coor_unit_cell_x_name(i, j, 5) = str2num(result);
+            Coor_unit_cell_x_name(i, j, 5) = str2double(result);
             result = strcat(num2str(i + 1), num2str(j), num2str(2), num2str(1));
-            Coor_unit_cell_y_name(i, j, 5) = str2num(result);
+            Coor_unit_cell_y_name(i, j, 5) = str2double(result);
             result = strcat(num2str(i + 1), num2str(j + 1), num2str(1), num2str(2));
-            Coor_unit_cell_x_name(i, j, 6) = str2num(result);
+            Coor_unit_cell_x_name(i, j, 6) = str2double(result);
             result = strcat(num2str(i + 1), num2str(j + 1), num2str(2), num2str(2));
-            Coor_unit_cell_y_name(i, j, 6) = str2num(result);
+            Coor_unit_cell_y_name(i, j, 6) = str2double(result);
 
             if j < 10
                 Coor_unit_cell_x_name(i, j, :) = Coor_unit_cell_x_name(i, j, :) / 1e3;
