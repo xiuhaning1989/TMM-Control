@@ -26,7 +26,7 @@ Step4没有封装，而是直接放在了主函数`TMM_Main.m`里面。
 
 + Lattice configuration改为结构体变量储存，以增加可读性
 
-```
+```matlab
 Lattice_config.a_b = a_b;  
 Lattice_config.b_b = b_b;
 Lattice_config.c_b = c_b;
@@ -52,7 +52,7 @@ Lattice_config.m_r = m_r;
 + 规范了一些代码格式。
 + 最后画图函数，添加了一个寻找XY坐标范围的功能，以固定绘制gif图时的坐标轴
 
-```
+```matlab
 % Plot all unit cells to form a n by m lattice
     figure;
     x_min = [];
