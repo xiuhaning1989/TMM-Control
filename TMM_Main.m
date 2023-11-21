@@ -5,7 +5,7 @@ clc;
 
 %% Params
     % rows and columns of unit cells.
-    n = 4; m = 4;
+    n = 5; m = 5;
 
     % Angle of the homogeneous lattice (1<=i_alpha<=176), (0.3344<=alpha<=3.8344).
     i_alpha = 16;
@@ -86,31 +86,16 @@ clc;
         U_fix_name = U_fix_name / 1e5;
     end
 
-    % U_fix_name=[U_bottom_name(1:end);U_fix_name];
-
-    % Define external force at the designated point of the lattice
-    f_U_name = [];
-
-    for j = 1:1
-        result = strcat(num2str(3), num2str(1), num2str(1), num2str(2)); f_U_name1 = str2double(result);
-
-        if j < 10
-            f_U_name1 = f_U_name1 / 1e3;
-        elseif j < 100
-            f_U_name1 = f_U_name1 / 1e4;
-        else
-            f_U_name1 = f_U_name1 / 1e5;
-        end
-
-        f_U_name = [f_U_name; f_U_name1];
-    end
-
-    F_external = [1] .* ones(length(f_U_name), 1);
-
+    % Define force name and force function
     delta_t = 1e-3; T = 1;
     Time = 0:delta_t:T;
-    omega = 10 * pi;
-    Force_ext = -F_external .* exp(-20 * (Time - 0.1) .^ 2) .* cos(omega * Time);
+    F_external = 5+0.0001;
+
+    [f_U_name,Force_ext] = define_external_force(3,1,1,2,F_external, Time);
+
+    % F_external = 1;
+    % omega = 10 * pi;
+    % Force_ext = -F_external .* exp(-20 * (Time - 0.1) .^ 2) .* cos(omega * Time);
 
     % u=zeros(2*(6*n*m+2*n+2*m),length(Time));
     initialvals = zeros(2 * (6 * n * m + 2 * n + 2 * m), 1);
@@ -121,10 +106,17 @@ clc;
         alpha_matrix, theta_matrix, Lattice_config, U_entire_name, U_fix_name, ...
         Time, Force_ext, f_U_name), 0:delta_t:T, initialvals, options2);
     U = U';
+    U_displacement = U(1:2:end,:);
+    [max_dis, index_max_dis] = max(U_displacement);
+    U_displacement = [U_displacement;max_dis;index_max_dis];
+    U_velocity = U(2:2:end,:);
+    [max_vel, index_max_vel] = max(U_velocity);
+    U_velocity = [U_velocity;max_vel;index_max_vel];
+    
 
     elapsedTime = toc;
     fprintf('Elapsed time: %.4f minutes\n', elapsedTime/60);
-    
+    save('U-5.mat', "U","U_velocity","U_displacement");
     % draw figure
     present_lattice_deformation_polarization_transformation('test1.gif', U, Time, Coor_unit_cell_x, Coor_unit_cell_y, Alpha, Gamma, Theta, n, m, rotation_kappa, i_alpha, U_entire_name)
 

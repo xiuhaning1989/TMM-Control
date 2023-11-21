@@ -135,39 +135,39 @@ function [Coor_unit_cell_x, Coor_unit_cell_y,rotation_kappa] = present_homogeneo
     rotation_kappa = [cos(angle), -sin(angle);
                     sin(angle), cos(-angle)];
 
-    % figure;
+    figure;
 
-    % for i = 1:n + 1
+    for i = 1:n + 1
 
-    %     for j = 1:m
+        for j = 1:m
 
-    %         for k = 1:9
-    %             XY_unit(1, k) = Coor_unit_cell_x(i, j, k); XY_unit(2, k) = Coor_unit_cell_y(i, j, k);
-    %         end
+            for k = 1:9
+                XY_unit(1, k) = Coor_unit_cell_x(i, j, k); XY_unit(2, k) = Coor_unit_cell_y(i, j, k);
+            end
 
-    %         XY_unit = rotation_kappa * XY_unit;
+            XY_unit = rotation_kappa * XY_unit;
 
-    %         if i == 1
-    %             hold on; fill(XY_unit(1, 4:7), XY_unit(2, 4:7), 'b')
-    %             hold on; plot(XY_unit(1, 4:7), XY_unit(2, 4:7), 'b-', 'linewidth', 0.8);
-    %         elseif i == n + 1
-    %             hold on; fill(XY_unit(1, 1:4), XY_unit(2, 1:4), 'r')
-    %             hold on; plot(XY_unit(1, 1:4), XY_unit(2, 1:4), 'r-', 'linewidth', 0.8);
-    %         else
-    %             hold on; fill(XY_unit(1, 1:4), XY_unit(2, 1:4), 'r')
-    %             hold on; plot(XY_unit(1, 1:4), XY_unit(2, 1:4), 'r-', 'linewidth', 0.8);
-    %             hold on; fill(XY_unit(1, 4:7), XY_unit(2, 4:7), 'b')
-    %             hold on; plot(XY_unit(1, 4:7), XY_unit(2, 4:7), 'b-', 'linewidth', 0.8);
-    %             hold on; plot(XY_unit(1, 8:9), XY_unit(2, 8:9), 'g-', 'linewidth', 1.5)
-    %             axis equal
-    %         end
+            if i == 1
+                hold on; fill(XY_unit(1, 4:7), XY_unit(2, 4:7), 'b')
+                hold on; plot(XY_unit(1, 4:7), XY_unit(2, 4:7), 'b-', 'linewidth', 0.8);
+            elseif i == n + 1
+                hold on; fill(XY_unit(1, 1:4), XY_unit(2, 1:4), 'r')
+                hold on; plot(XY_unit(1, 1:4), XY_unit(2, 1:4), 'r-', 'linewidth', 0.8);
+            else
+                hold on; fill(XY_unit(1, 1:4), XY_unit(2, 1:4), 'r')
+                hold on; plot(XY_unit(1, 1:4), XY_unit(2, 1:4), 'r-', 'linewidth', 0.8);
+                hold on; fill(XY_unit(1, 4:7), XY_unit(2, 4:7), 'b')
+                hold on; plot(XY_unit(1, 4:7), XY_unit(2, 4:7), 'b-', 'linewidth', 0.8);
+                hold on; plot(XY_unit(1, 8:9), XY_unit(2, 8:9), 'g-', 'linewidth', 1.5)
+                axis equal
+            end
 
-    %     end
+        end
 
-    % end
+    end
 
-    % axis equal
+    axis equal
 
-    % title(['Homogeneous Lattice of ' num2str(n) ' rows and ' ...
-    %            num2str(m) ' columns with angle \alpha = ' num2str(alpha)])
+    title(['Homogeneous Lattice of ' num2str(n) ' rows and ' ...
+               num2str(m) ' columns with angle \alpha = ' num2str(alpha)])
 end
