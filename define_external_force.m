@@ -1,9 +1,14 @@
-function [force_index, force_func] = define_external_force(row, col, direction, point, F_external, Time)
+function [force_index, force_func] = define_external_force(force_index_num, F_external, Time)
     % Define the function of the external force and the lattice coordinates to which the external force is applied.
     % At present, the function is only applicable to apply a single directional force, and it is a return to zero square wave.
     % index: lattice coordinates where the external force is applied
     % F_external: Magnitude of external force
 
+    row = force_index_num(1);
+    col = force_index_num(2);
+    direction = force_index_num(3);
+    point = force_index_num(4);
+    
     force_index = [];
 
     for j = 1:1

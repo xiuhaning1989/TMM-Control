@@ -91,7 +91,7 @@ clc;
     Time = 0:delta_t:T;
     F_external = 5+0.0001;
 
-    [f_U_name,Force_ext] = define_external_force(3,1,1,2,F_external, Time);
+    [f_U_name,Force_ext] = define_external_force([3,1,1,2],F_external, Time);
 
     % F_external = 1;
     % omega = 10 * pi;
@@ -106,14 +106,7 @@ clc;
         alpha_matrix, theta_matrix, Lattice_config, U_entire_name, U_fix_name, ...
         Time, Force_ext, f_U_name), 0:delta_t:T, initialvals, options2);
     U = U';
-    U_displacement = U(1:2:end,:);
-    [max_dis, index_max_dis] = max(U_displacement);
-    U_displacement = [U_displacement;max_dis;index_max_dis];
-    U_velocity = U(2:2:end,:);
-    [max_vel, index_max_vel] = max(U_velocity);
-    U_velocity = [U_velocity;max_vel;index_max_vel];
     
-
     elapsedTime = toc;
     fprintf('Elapsed time: %.4f minutes\n', elapsedTime/60);
     save('U-5.mat', "U","U_velocity","U_displacement");
