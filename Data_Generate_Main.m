@@ -30,7 +30,7 @@ addpath('functions');
     eta_bond = 20; eta_spring = 10;
     m_b = 0.1; m_r = 0.1;
 
-    Lattice_config.a_b = a_b;  
+    Lattice_config.a_b = a_b;
     Lattice_config.b_b = b_b;
     Lattice_config.c_b = c_b;
     Lattice_config.psi_ab = psi_ab;
@@ -56,12 +56,12 @@ addpath('functions');
     [Alpha, Gamma, Theta] = solve_angles_bistable_lattice(Lattice_config);
 
     % Present homogeneous hexagon
-    [Coor_unit_cell_x, Coor_unit_cell_y,rotation_kappa] = present_homogeneous_hexagon(Lattice_config,Alpha,Gamma,Theta,n,m,i_alpha);
+    [Coor_unit_cell_x, Coor_unit_cell_y, rotation_kappa] = present_homogeneous_hexagon(Lattice_config, Alpha, Gamma, Theta, n, m, i_alpha);
 
     % Store u name unit cell
     [U_entire_name, U_bottom_name, U_left_name, U_top_name, U_right_name] = store_u_name_unit_cell(n, m);
 
-    % Solve dynamic equations 
+    % Solve dynamic equations
     alpha = Alpha(i_alpha);
     gamma = Gamma(i_alpha);
     theta = Theta(i_alpha);
@@ -91,27 +91,38 @@ addpath('functions');
     % Define force name and force function
     delta_t = 1e-3; T = 1;
     Time = 0:delta_t:T;
-    F_external = 5+0.0001;
 
-    [f_U_name,Force_ext] = define_external_force([3,1,1,2],F_external, Time);
+    % the loop index of external force
+    F_loop_index = generate_f_loop_index(U_entire_name);
 
-    % F_external = 1;
-    % omega = 10 * pi;
-    % Force_ext = -F_external .* exp(-20 * (Time - 0.1) .^ 2) .* cos(omega * Time);
-
-    % u=zeros(2*(6*n*m+2*n+2*m),length(Time));
-    initialvals = zeros(2 * (6 * n * m + 2 * n + 2 * m), 1);
-
+    % Loop for data generation
     tic;
-    options2 = odeset('RelTol', 1e-8, 'AbsTol', 1e-8 .* ones(1, 2 * (6 * n * m + 2 * n + 2 * m)));
-    [t, U] = ode45(@(t, u) equation_motion_unit_cell_dissipation(t, u, n, m, ...
-        alpha_matrix, theta_matrix, Lattice_config, U_entire_name, U_fix_name, ...
-        Time, Force_ext, f_U_name), 0:delta_t:T, initialvals, options2);
-    U = U';
-    
-    elapsedTime = toc;
-    fprintf('Elapsed time: %.4f minutes\n', elapsedTime/60);
-    save('U-5.mat', "U","U_velocity","U_displacement");
-    % draw figure
-    present_lattice_deformation_polarization_transformation('test1.gif', U, Time, Coor_unit_cell_x, Coor_unit_cell_y, Alpha, Gamma, Theta, n, m, rotation_kappa, i_alpha, U_entire_name)
+    parpool('local',6);
+    parfor i = 1:length(U_entire_name)
+    % for i = 1:1
 
+        for F_external = 1:2
+
+            [f_U_name, Force_ext] = define_external_force(F_loop_index(i,:), F_external, Time);
+
+            initialvals = zeros(2 * (6 * n * m + 2 * n + 2 * m), 1);
+            options2 = odeset('RelTol', 1e-8, 'AbsTol', 1e-8 .* ones(1, 2 * (6 * n * m + 2 * n + 2 * m)));
+            [t, U] = ode45(@(t, u) equation_motion_unit_cell_dissipation(t, u, n, m, ...
+                alpha_matrix, theta_matrix, Lattice_config, U_entire_name, U_fix_name, ...
+                Time, Force_ext, f_U_name), 0:delta_t:T, initialvals, options2);
+            U = U';
+
+            max_data = data_processing(U, U_entire_name);
+    
+            % save data
+            U_filename = sprintf('%.4f_%d_%d_%d_%d.mat',F_external,F_loop_index(i,1),F_loop_index(i,2),F_loop_index(i,3),F_loop_index(i,4 ));
+            data_save(F_loop_index(i,:),max_data(end,:),U,U_filename);
+
+            % draw figure
+            % present_lattice_deformation_polarization_transformation('test1.gif', U, Time, Coor_unit_cell_x, Coor_unit_cell_y, Alpha, Gamma, Theta, n, m, rotation_kappa, i_alpha, U_entire_name)
+        end
+
+    end
+    elapsedTime = toc;
+    delete(gcp('nocreate'));
+    fprintf('Elapsed time: %.4f minutes\n', elapsedTime / 60);

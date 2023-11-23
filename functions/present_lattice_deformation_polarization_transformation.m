@@ -19,7 +19,7 @@ function present_lattice_deformation_polarization_transformation(filename, U, Ti
     figure;
     x_min = [];
     x_max = [];
-    y_min = []
+    y_min = [];
     y_max = [];
     for i = 1:n + 1
 
