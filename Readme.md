@@ -26,7 +26,7 @@ Step4没有封装，而是直接放在了主函数`TMM_Main.m`里面。
 
 + Lattice configuration改为结构体变量储存，以增加可读性
 
-```
+```matlab
 Lattice_config.a_b = a_b;  
 Lattice_config.b_b = b_b;
 Lattice_config.c_b = c_b;
@@ -52,7 +52,7 @@ Lattice_config.m_r = m_r;
 + 规范了一些代码格式。
 + 最后画图函数，添加了一个寻找XY坐标范围的功能，以固定绘制gif图时的坐标轴
 
-```
+```matlab
 % Plot all unit cells to form a n by m lattice
     figure;
     x_min = [];
@@ -110,6 +110,7 @@ Lattice_config.m_r = m_r;
 
 最后`x_lim`和`y_lim`中储存了这次画图lattice的坐标上下限（已两头取整）
 
+
 # 2023-11-23 修改记录
 
 新增数据生成脚本，采用并行计算加速
@@ -141,7 +142,6 @@ Lattice_config.m_r = m_r;
   ```
 
 + 理论上，并行`parfor`速度最大提升n倍，n为cpu核心数
-+ 由
 
 ### 新增函数
 
@@ -160,6 +160,8 @@ Lattice_config.m_r = m_r;
 │  └─metadata 元数据
 └─functions 函数
 ```
+
+
 
 
 
