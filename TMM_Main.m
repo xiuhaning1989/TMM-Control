@@ -3,6 +3,8 @@ clear;
 clear -global;
 clc;
 
+addpath('functions');
+
 %% Params
     % rows and columns of unit cells.
     n = 5; m = 5;

@@ -3,6 +3,8 @@ clear;
 clear -global;
 clc;
 
+addpath('functions');
+
 %% Params
     % rows and columns of unit cells.
     n = 5; m = 5;
@@ -94,17 +96,16 @@ clc;
     F_loop_index = generate_f_loop_index(U_entire_name);
 
     % Loop for data generation
-    data_external_force = [];
-    data_max_displacement = [];
-    for i = 1:length(F_loop_index)
+    tic;
+    parpool('local',6);
+    parfor i = 1:length(U_entire_name)
+    % for i = 1:1
 
-        for F_external = 1:1
+        for F_external = 1:2
 
             [f_U_name, Force_ext] = define_external_force(F_loop_index(i,:), F_external, Time);
 
             initialvals = zeros(2 * (6 * n * m + 2 * n + 2 * m), 1);
-
-            tic;
             options2 = odeset('RelTol', 1e-8, 'AbsTol', 1e-8 .* ones(1, 2 * (6 * n * m + 2 * n + 2 * m)));
             [t, U] = ode45(@(t, u) equation_motion_unit_cell_dissipation(t, u, n, m, ...
                 alpha_matrix, theta_matrix, Lattice_config, U_entire_name, U_fix_name, ...
@@ -112,20 +113,16 @@ clc;
             U = U';
 
             max_data = data_processing(U, U_entire_name);
-            data_external_force = [data_external_force; F_loop_index(i,:)];
-            data_max_displacement = [data_max_displacement;max_data(end,:)];
     
             % save data
-            save('data/external_force.mat','data_external_force');
-            save('data/max_displacement.mat','data_max_displacement');
-            U_filename = ['data/metadata/',num2str(F_external),'_',num2str(F_loop_index(i,1)),'_',num2str(F_loop_index(i,2)),'_',num2str(F_loop_index(i,3)),'_',num2str(F_loop_index(i,4 )),'.mat'];
-            save(U_filename,'U');
-
-            elapsedTime = toc;
-            fprintf('Elapsed time: %.4f minutes\n', elapsedTime / 60);
+            U_filename = sprintf('%.4f_%d_%d_%d_%d.mat',F_external,F_loop_index(i,1),F_loop_index(i,2),F_loop_index(i,3),F_loop_index(i,4 ));
+            data_save(F_loop_index(i,:),max_data(end,:),U,U_filename);
 
             % draw figure
             % present_lattice_deformation_polarization_transformation('test1.gif', U, Time, Coor_unit_cell_x, Coor_unit_cell_y, Alpha, Gamma, Theta, n, m, rotation_kappa, i_alpha, U_entire_name)
         end
 
     end
+    elapsedTime = toc;
+    delete(gcp('nocreate'));
+    fprintf('Elapsed time: %.4f minutes\n', elapsedTime / 60);
