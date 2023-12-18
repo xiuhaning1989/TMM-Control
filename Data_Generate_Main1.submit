@@ -1,0 +1,17 @@
+#!/bin/bash
+#PBS -q condo
+#PBS -l nodes=1:ppn=36
+#PBS -l walltime=8:00:00
+#PBS -A behrou-group 
+#PBS -m e
+#PBS -M hxiu
+##PBS -j oe
+##PBS -o /home/hxiu/MATLAB_TMM_Control/Lattice_5_5/
+##PBS -e /home/hxiu/MATLAB_TMM_Control/Lattice_5_5/
+#PBS -N Matlab
+
+
+cd $PBS_O_WORKDIR
+module load matlab/2021a 
+matlab -nodisplay < Data_Generate_Main1.m
+#End-of-file (EOF)
