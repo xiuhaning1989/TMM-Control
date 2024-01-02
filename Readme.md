@@ -161,6 +161,51 @@ Lattice_config.m_r = m_r;
 └─functions 函数
 ```
 
+# 2024-1-2 修改记录
+
+新增数据分析脚本`Data_Analyzing.m`及相关函数
+
+## `Data_Analyzing.m` 说明
+
+分为两部分，一是PreSettings（主要是参数计算、Index_Map生成、数据处理及导入），二是Drawing（绘制三维分析图）。
+
+### PreSettings
+
+前面部分与之前代码相似，这里主要将两个新的相关函数
+
+`function: generate_index_map`
+
+主要用来生成绘图时晶格每个点的坐标map，返回`index_map`矩阵
+index => x_coor , y_coor
+[1,1,3] => 0.3028, -0.3979
+
+`function: process_data`
+
+数据预处理，从元数据中提取出需要分析的时刻数据的三个最大位移及其对应位置坐标，返回一个结构体。
+
+```matlab
+data = struct('F', {},'F_index', {},'max_x', {},'max_x_index', {},'max_y', {},'max_y_index', {},'max_norm', {},'max_norm_index', {});
+```
+
+### Drawing
+
+先定义了6个渐变的颜色矩阵，用以对点上渐变色。
+
+`function: generate_gradient_colors`
+
+用以自定义生成渐变色，传入起始颜色和终止颜色RBG值（255）以及需要生成的渐变色数量，返回归一化之后的渐变色RBG矩阵。
+
+`F_index_to_draw`中定义了需要绘制的外力（作用点来区分）
+
+分别绘制三个最大位移（$u_x, u_y, \sqrt{u_x^2 + u_y^2}$）
+
+`function: draw_response`
+
+函数，用以绘制外力响应，z轴高度表示最大位移大小，圆球大小和颜色深度对应递增外力。
+
+
+
+
 
 
 
